@@ -41,12 +41,12 @@ import numpy as np
 #zad3c min i max wartosc w atrybucie
 customer_id_kolumna = 'CustomerId'
 with open('Churn_Modelling.csv', 'r') as file:
-    reader = csv.DictReader(file)
+    odczyt = csv.DictReader(file)
 
     min_value = float('inf')
     max_value = float('-inf')
 
-    for row in reader:
+    for row in odczyt:
         value = int(row[customer_id_kolumna])
         if value < min_value:
             min_value = value
