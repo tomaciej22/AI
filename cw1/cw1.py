@@ -1,4 +1,5 @@
 import csv
+import math
 import numpy as np
 import pandas as pd
 
@@ -94,7 +95,7 @@ import pandas as pd
 #
 # print(df.head(10))
 
-#zad5a
+#zad4b
 # def znormalizowane_wartosci_atrybutu(sciezka_pliku, indeks_atrybutow, poczatek_przedzialu, koniec_przedzialu):
 #     data = []
 #     with open(sciezka_pliku, 'r') as file:
@@ -127,4 +128,75 @@ import pandas as pd
 #
 # znormalizowane_wartosci_atrybutu('dane\Churn_Modelling.csv', 1, -1, 1) # <-1,1>
 
-#zad5c
+#zad4c mean(a_i)
+# def standaryzacja(sciezka_pliku, indeks_atrybutow):
+#     with open(sciezka_pliku, 'r') as file:
+#         reader = csv.reader(file)
+#         header = next(reader)
+#         data = list(reader)
+#
+#         indeks_numeru = []
+#         for i, col in enumerate(header):
+#             if i != indeks_atrybutow and all(isinstance(row[i], (int, float)) for row in data):
+#                 indeks_numeru.append(i)
+#
+#         srednia = [sum(float(row[i]) for row in data) / len(data) for i in indeks_numeru]
+#         odchylenie = [math.sqrt(sum((float(row[i]) - srednia[j]) ** 2 for row in data) / len(data)) for j, i in
+#                 enumerate(indeks_numeru)]
+#
+#         for i, row in enumerate(data):
+#             for j, index in enumerate(indeks_numeru):
+#                 row[index] = (float(row[index]) - srednia[j]) / odchylenie[j]
+#             data[i] = row
+#
+#     with open('zad4c1.csv', 'w', newline='') as file:
+#         writer = csv.writer(file)
+#         writer.writerow(header)
+#         writer.writerows(data)
+#
+#     print(f"Atrybut {header[indeks_atrybutow]} zstandaryzowany")
+# standaryzacja('dane\Churn_Modelling.csv', 4)
+
+#zad4c variance(a_i)
+# def standaryzacja(sciezka_pliku, indeks_atrybutow):
+#     with open(sciezka_pliku, 'r') as file:
+#         reader = csv.reader(file)
+#         header = next(reader)
+#         ilosc_obiektow = 0
+#         srednia = 0
+#         wariancja = 0
+#         found_numeric_value = False
+#         for row in reader:
+#             if row[indeks_atrybutow].isnumeric():
+#                 ilosc_obiektow += 1
+#                 srednia += float(row[indeks_atrybutow])
+#                 found_numeric_value = True
+#         if not found_numeric_value:
+#             print(f"Nie znaleziono wartości liczbowych dla atrybutu {indeks_atrybutow}")
+#             return
+#         srednia /= ilosc_obiektow
+#         file.seek(0)
+#         next(reader)
+#         for row in reader:
+#             if row[indeks_atrybutow].isnumeric():
+#                 wartosc_atrybutow = float(row[indeks_atrybutow])
+#                 wariancja += (wartosc_atrybutow - srednia) ** 2
+#         wariancja /= ilosc_obiektow
+#         odchylenie_std = math.sqrt(wariancja)
+#         file.seek(0)
+#         next(reader)
+#         for row in reader:
+#             if row[indeks_atrybutow].isnumeric():
+#                 wartosc_atrybutow = float(row[indeks_atrybutow])
+#                 standaryzowana_wartosc = (wartosc_atrybutow - srednia) / odchylenie_std
+#                 row[indeks_atrybutow] = standaryzowana_wartosc
+#
+#         with open('standaryzowane_dane.csv', 'w', newline='') as file:
+#             writer = csv.writer(file)
+#             writer.writerow(header)
+#             writer.writerows(reader)
+#
+#         print(f"Atrybut {indeks_atrybutow} standaryzowany")
+# standaryzacja('dane\Churn_Modelling.csv',3)
+
+
